@@ -10,12 +10,20 @@ import Cosmic from 'cosmicjs'
 import dotenv from 'dotenv'
 dotenv.config();
 
+console.log('🔍 DEBUGGING: Starting Cosmic CMS connection...')
+console.log('📦 Bucket slug:', 'my-node-boilerplate-production')
+console.log('🔑 Read key:', 'IFqbb0kE65H40qBgWxbhBDtDhHyNNcsKG1rydQyNiDpX3hxQg0')
+console.log('✏️  Write key:', 'XgnTtSgf1P5B4VaKwf1MSDrDx3MSv7EjKQyYoAivZb5FXvD7wf')
+
 const api = Cosmic()
+console.log('🌍 Cosmic API initialized:', !!api)
+
 const bucket = api.bucket({
-  slug: process.env.COSMIC_BUCKET,
-  read_key: process.env.COSMIC_READ_KEY,
-  write_key: process.env.COSMIC_WRITE_KEY
+  slug: 'my-node-boilerplate-production',
+  read_key: 'IFqbb0kE65H40qBgWxbhBDtDhHyNNcsKG1rydQyNiDpX3hxQg0',
+  write_key: 'XgnTtSgf1P5B4VaKwf1MSDrDx3MSv7EjKQyYoAivZb5FXvD7wf'
 })
+console.log('🪣 Bucket initialized:', !!bucket)
 const app = express()
 
 app.use(bodyParser.json())
