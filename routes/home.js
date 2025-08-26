@@ -11,17 +11,22 @@ module.exports = (app, config, bucket, partials, _) => {
       console.log('📦 Objects count:', response.objects ? response.objects.length : 'No objects property')
       
       const objects = response.objects
+      console.log('📋 All objects:', objects.map(obj => ({ slug: obj.slug, title: obj.title })))
       res.locals.globals = require('../helpers/globals')(objects, _)
+      console.log('🌐 Globals:', res.locals.globals)
       const page = _.find(objects, { 'slug': 'home' })
       console.log('🏠 Home page found:', !!page)
+      console.log('🏠 Home page data:', page)
       
       res.locals.page = page
-      const carousel_items = page.metadata.carousel
-      carousel_items.forEach((item, i) => {
-        if (i === 0)
-          item.is_first = true
-        item.index = i
-      })
+      const carousel_items = page.metadata && page.metadata.carousel ? page.metadata.carousel : []
+      if (carousel_items && Array.isArray(carousel_items)) {
+        carousel_items.forEach((item, i) => {
+          if (i === 0)
+            item.is_first = true
+          item.index = i
+        })
+      }
       return res.render('index.html', {
         partials
       })
