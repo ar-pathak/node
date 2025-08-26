@@ -4,7 +4,7 @@ import async from 'async'
 module.exports = (app, config, bucket, partials, _) => {
   app.get('/contact', async (req, res) => {
     try {
-      const response = await bucket.getObjects()
+      const response = await bucket.objects.find()
       const objects = response.objects
       res.locals.globals = require('../helpers/globals')(objects, _)
       res.locals.page = _.find(objects, { 'slug': 'contact' })
@@ -20,7 +20,7 @@ module.exports = (app, config, bucket, partials, _) => {
   app.post('/contact', async (req, res) => {
     var data = req.body
     try {
-      const response = await bucket.getObject({ slug: 'contact-form' })
+      const response = await bucket.objects.findOne({ slug: 'contact-form' })
       const object = response.object
       const contact_form = {
         to: object.metadata.to,
@@ -59,7 +59,7 @@ module.exports = (app, config, bucket, partials, _) => {
         ]
       }
       // Write to Cosmic Bucket (Optional)
-      const new_object_response = await bucket.addObject(new_object)
+      const new_object_response = await bucket.objects.insertOne(new_object)
       return res.json({ status: 'success', data: new_object_response })
     } catch(error) {
       console.log(error)

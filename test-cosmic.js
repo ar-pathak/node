@@ -1,24 +1,25 @@
 // Test Cosmic CMS connection
-const Cosmic = require('cosmicjs')
+const { createBucketClient } = require('@cosmicjs/sdk')
+require('dotenv').config()
 
 console.log('🧪 TESTING COSMIC CMS CONNECTION...')
 console.log('================================')
+console.log('📦 Bucket slug:', process.env.COSMIC_BUCKET)
+console.log('🔑 Read key:', process.env.COSMIC_READ_KEY)
+console.log('✏️  Write key:', process.env.COSMIC_WRITE_KEY)
 
-const api = Cosmic()
-console.log('✅ Cosmic API imported successfully')
-
-const bucket = api.bucket({
-  slug: 'my-node-boilerplate-production',
-  read_key: 'IFqbb0kE65H40qBgWxbhBDtDhHyNNcsKG1rydQyNiDpX3hxQg0',
-  write_key: 'XgnTtSgf1P5B4VaKwf1MSDrDx3MSv7EjKQyYoAivZb5FXvD7wf'
+const bucket = createBucketClient({
+  bucketSlug: process.env.COSMIC_BUCKET,
+  readKey: process.env.COSMIC_READ_KEY,
+  writeKey: process.env.COSMIC_WRITE_KEY
 })
 console.log('✅ Bucket object created')
 
 // Test the connection
 async function testConnection() {
   try {
-    console.log('🔄 Testing bucket.getObjects()...')
-    const response = await bucket.getObjects()
+    console.log('🔄 Testing bucket.objects.find()...')
+    const response = await bucket.objects.find()
     
     console.log('🎉 SUCCESS! Connection working!')
     console.log('📊 Response structure:')
@@ -28,7 +29,7 @@ async function testConnection() {
       console.log('- Objects count:', response.objects.length)
       console.log('- First few objects:')
       response.objects.slice(0, 3).forEach((obj, i) => {
-        console.log(`  ${i + 1}. ${obj.title} (${obj.slug}) - Type: ${obj.type_slug}`)
+        console.log(`  ${i + 1}. ${obj.title} (${obj.slug}) - Type: ${obj.type}`)
       })
     } else {
       console.log('- No objects property in response')

@@ -6,22 +6,19 @@ import bodyParser from 'body-parser'
 import compression from 'compression'
 import _ from 'lodash'
 import config from './config'
-import Cosmic from 'cosmicjs'
+import { createBucketClient } from '@cosmicjs/sdk'
 import dotenv from 'dotenv'
 dotenv.config();
 
 console.log('🔍 DEBUGGING: Starting Cosmic CMS connection...')
-console.log('📦 Bucket slug:', 'my-node-boilerplate-production')
-console.log('🔑 Read key:', 'IFqbb0kE65H40qBgWxbhBDtDhHyNNcsKG1rydQyNiDpX3hxQg0')
-console.log('✏️  Write key:', 'XgnTtSgf1P5B4VaKwf1MSDrDx3MSv7EjKQyYoAivZb5FXvD7wf')
+console.log('📦 Bucket slug:', process.env.COSMIC_BUCKET)
+console.log('🔑 Read key:', process.env.COSMIC_READ_KEY)
+console.log('✏️  Write key:', process.env.COSMIC_WRITE_KEY)
 
-const api = Cosmic()
-console.log('🌍 Cosmic API initialized:', !!api)
-
-const bucket = api.bucket({
-  slug: 'my-node-boilerplate-production',
-  read_key: 'IFqbb0kE65H40qBgWxbhBDtDhHyNNcsKG1rydQyNiDpX3hxQg0',
-  write_key: 'XgnTtSgf1P5B4VaKwf1MSDrDx3MSv7EjKQyYoAivZb5FXvD7wf'
+const bucket = createBucketClient({
+  bucketSlug: process.env.COSMIC_BUCKET,
+  readKey: process.env.COSMIC_READ_KEY,
+  writeKey: process.env.COSMIC_WRITE_KEY
 })
 console.log('🪣 Bucket initialized:', !!bucket)
 const app = express()

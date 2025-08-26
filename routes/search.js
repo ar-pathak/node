@@ -2,7 +2,7 @@
 module.exports = (app, config, bucket, partials, _) => {
   app.get('/search', async (req, res) => {
     try {
-      const response = await bucket.getObjects()
+      const response = await bucket.objects.find()
       const objects = response.objects
       const searchable_objects = [
         ..._.filter(objects, { type_slug: 'pages' }),
