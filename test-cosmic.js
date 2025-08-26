@@ -1,5 +1,5 @@
 // Test Cosmic CMS connection
-const Cosmic = require('cosmicjs')
+import Cosmic from 'cosmicjs'
 
 console.log('🧪 TESTING COSMIC CMS CONNECTION...')
 console.log('================================')
