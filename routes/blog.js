@@ -2,7 +2,7 @@
 module.exports = (app, config, bucket, partials, _) => {
   app.get('/blog', async (req, res) => {
     try {
-      const response = await bucket.getObjects()
+      const response = await bucket.objects.find()
       const objects = response.objects
       res.locals.globals = require('../helpers/globals')(objects, _)
       const page = _.find(objects, { 'slug': 'blog' })
@@ -23,7 +23,7 @@ module.exports = (app, config, bucket, partials, _) => {
   app.get('/blog/:slug', async (req, res) => {
     const slug = req.params.slug
     try {
-      const response = await bucket.getObjects()
+      const response = await bucket.objects.find()
       const objects = response.objects
       res.locals.globals = require('../helpers/globals')(objects, _)
       const page = _.find(objects, { slug })

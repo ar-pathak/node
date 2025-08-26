@@ -5,7 +5,7 @@ module.exports = (app, config, bucket, partials, _) => {
       console.log('🏠 HOME ROUTE: Starting to fetch objects from Cosmic...')
       console.log('🪣 Bucket object:', bucket)
       
-      const response = await bucket.getObjects()
+      const response = await bucket.objects.find()
       console.log('✅ SUCCESS: Got response from Cosmic')
       console.log('📊 Response keys:', Object.keys(response))
       console.log('📦 Objects count:', response.objects ? response.objects.length : 'No objects property')
