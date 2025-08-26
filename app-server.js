@@ -12,9 +12,9 @@ dotenv.config();
 
 const api = Cosmic()
 const bucket = api.bucket({
-  slug: process.env.COSMIC_BUCKET,
-  read_key: process.env.COSMIC_READ_KEY,
-  write_key: process.env.COSMIC_WRITE_KEY
+  slug: 'my-node-boilerplate-production',
+  read_key: 'IFqbb0kE65H40qBgWxbhBDtDhHyNNcsKG1rydQyNiDpX3hxQg0',
+  write_key: 'XgnTtSgf1P5B4VaKwf1MSDrDx3MSv7EjKQyYoAivZb5FXvD7wf'
 })
 const app = express()
 
